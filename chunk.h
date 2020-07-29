@@ -275,11 +275,11 @@ public:
 
     void render();
 private:
-    int size = 5;
+    int size = 16;
     float surface = 0.5f;
 
     Mesh mesh;
 
-    float inBound(int x, int y, int z);
+    float inBound(glm::vec3 pos);
     std::vector<Vertex> generateVertices();
 };

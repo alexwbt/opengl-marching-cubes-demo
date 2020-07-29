@@ -6,21 +6,22 @@ Mesh::Mesh(std::vector<Vertex> vertices)
 {
 	this->vertices = vertices;
 
+	unsigned long long vertexSize = sizeof(Vertex);
+	unsigned long long vec3Size = sizeof(glm::vec3);
+
 	glGenVertexArrays(1, &vaoId);
 	glGenBuffers(1, &vboId);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vboId);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
-
 	glBindVertexArray(vaoId);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
 
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
+	glBindBuffer(GL_ARRAY_BUFFER, vboId);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * vertexSize, vertices.data(), GL_STATIC_DRAW);
 
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(6 * sizeof(float)));
+	for (int i = 0; i < 3; i++)
+	{
+		glEnableVertexAttribArray(i);
+		glVertexAttribPointer(i, 3, GL_FLOAT, GL_FALSE, vertexSize, (void*)(i * vec3Size));
+	}
 }
 
 Mesh::~Mesh()
