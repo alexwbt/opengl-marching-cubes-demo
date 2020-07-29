@@ -9,16 +9,16 @@ Chunk::Chunk() : mesh(generateVertices())
 
 float Chunk::inBound(int x, int y, int z)
 {
-    return x >= 0 && x < size && y >= 0 && y < size && z >= 0 && z < size;
+    return x >= 0 && x < size&& y >= 0 && y < size&& z >= 0 && z < size;
 }
 
 std::vector<Vertex> Chunk::generateVertices()
 {
     srand(time(NULL));
-    float*** data = new float**[size];
+    float*** data = new float** [size];
     for (int x = 0; x < size; x++)
     {
-        data[x] = new float*[size];
+        data[x] = new float* [size];
         for (int y = 0; y < size; y++)
         {
             data[x][y] = new float[size];
@@ -68,18 +68,21 @@ std::vector<Vertex> Chunk::generateVertices()
                     // int vertCount = 0;
                     for (int i = 0; i < 16; i++)
                     {
-                        if (TRI[cubeIndex][i] != -1)
+                        if (TRI[cubeIndex][i] >= 0)
                         {
                             // vertCount++;
                             int a = CIAFE[TRI[cubeIndex][i]];
                             int b = CIBFE[TRI[cubeIndex][i]];
 
-                            glm::vec3 p1((float)cube[a][0], (float)cube[a][1], (float)cube[a][2]);
-                            glm::vec3 p2((float)cube[b][0], (float)cube[b][1], (float)cube[b][2]);
-                            float v1 = inBound(cube[a][0], cube[a][1], cube[a][2]) ? data[cube[a][0]][cube[a][1]][cube[a][2]] : 0;
-                            float v2 = inBound(cube[b][0], cube[b][1], cube[b][2]) ? data[cube[b][0]][cube[b][1]][cube[b][2]] : 0;
-                            
-                            glm::vec3 pos = p1 + (surface - v1) * (p2 - p1) / (v2 - v1);
+                            glm::vec3 p1(((float)cube[a][0]), ((float)cube[a][1]), ((float)cube[a][2]));
+                            glm::vec3 p2(((float)cube[b][0]), ((float)cube[b][1]), ((float)cube[b][2]));
+                            float v1 = inBound(cube[a][0], cube[a][1], cube[a][2]) ? data[cube[a][0]][cube[a][1]][cube[a][2]] : 0.0f;
+                            float v2 = inBound(cube[b][0], cube[b][1], cube[b][2]) ? data[cube[b][0]][cube[b][1]][cube[b][2]] : 0.0f;
+
+                            glm::vec3 pos;
+                            if (v1 == 0.0f) pos = p1;
+                            else if (v2 == 0.0f) pos = p2;
+                            else pos = p1 + (surface - v1) * (p2 - p1) / (v2 - v1);
                             std::cout << pos.x << ' ' << pos.y << ' ' << pos.z << ' ' << p1.x << std::endl;
                             // glm::vec3 pos = (p1 + p2) * 0.5f;
                             glm::vec3 color(pos.x / size, pos.y / size, pos.z / size);
