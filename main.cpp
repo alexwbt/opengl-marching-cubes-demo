@@ -24,7 +24,7 @@ int main()
     }
 
     glEnable(GL_CULL_FACE);
-    glFrontFace(GL_CCW);
+    glFrontFace(GL_CW);
     glCullFace(GL_FRONT);
 
     glEnable(GL_DEPTH_TEST);

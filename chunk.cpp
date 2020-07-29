@@ -70,7 +70,9 @@ std::vector<Vertex> Chunk::generateVertices()
                             float v1 = inBound(p1) ? data[(int)p1.x][(int)p1.y][(int)p1.z] : 0;
                             float v2 = inBound(p2) ? data[(int)p2.x][(int)p2.y][(int)p2.z] : 0;
 
-                            glm::vec3 pos = p1 + (surface - v1) * (p2 - p1) / (v2 - v1);
+                            glm::vec3 pos;
+                            if (fabs(v2 - v1) < 0.1) pos = p1;
+                            else pos = p1 + (surface - v1) * (p2 - p1) / (v2 - v1);
                             glm::vec3 color(pos.x / size, pos.y / size, pos.z / size);
                             vertices.push_back({ pos, glm::vec3(1), color });
 
