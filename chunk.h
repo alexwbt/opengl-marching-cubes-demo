@@ -275,8 +275,8 @@ public:
 
     void render();
 private:
-    int size = 32;
-    float surface = 25.0f, min = -50.0f, max = 100.0f;
+    int size = 100;
+    float surface = 0.5f, min = 0.0f, max = 1.0f;
 
     Mesh mesh;
 

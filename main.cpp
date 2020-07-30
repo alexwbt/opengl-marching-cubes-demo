@@ -32,6 +32,12 @@ int main()
 
     Light::lights.push_back(&Light(glm::vec3(0.2f, -1.0f, 1.2f), { glm::vec3(0.25f), glm::vec3(1.0f), glm::vec3(1.0f) }));
 
+    Light flashLight = Light(glm::vec3(0.0f), glm::vec3(0.0f),
+    	{ glm::vec3(0.1f), glm::vec3(1.0f), glm::vec3(0.5f) },
+    	{ 1.0f, 0.09f, 0.032f }, 12.5f, 20.0f);
+
+    Light::lights.push_back(&flashLight);
+
     Chunk chunk;
     Camera camera;
 
@@ -51,14 +57,17 @@ int main()
         glClearColor(0.0f, 0.3f, 0.4f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        Light::update(&shader);
         camera.update(deltaTime);
         shader.setVec3("cameraPos", camera.position);
 
+        flashLight.setPosition(camera.position);
+        flashLight.setDirection(camera.front);
+        Light::update(&shader);
+
         glm::mat4 projection(1.0f);
-        projection = glm::perspective(glm::radians(45.0f), (float)Window::width / (float)Window::height, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(45.0f), (float)Window::width / (float)Window::height, 0.1f, 300.0f);
         glm::mat4 model(1.0f);
-        model = glm::translate(model, glm::vec3(0, 0, -25.0f));
+        model = glm::translate(model, glm::vec3(28.0f, -60.0f, -60.0f));
         shader.setMat4("model", model);
         shader.setMat4("pvm", projection * camera.viewMatrix * model);
 

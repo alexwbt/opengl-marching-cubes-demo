@@ -22,7 +22,7 @@ std::vector<Vertex> Chunk::generateVertices()
     PerlinNoise noise(time(NULL));
 
     float*** data = new float** [size];
-    double scale = size * 0.25;
+    double scale = size * 0.075;
     for (int x = 0; x < size; x++)
     {
         data[x] = new float* [size];
@@ -32,7 +32,10 @@ std::vector<Vertex> Chunk::generateVertices()
             for (int z = 0; z < size; z++)
             {
                 // data[x][y][z] = ((float)rand() / (float)RAND_MAX) * (max - min) + min;
-                data[x][y][z] = noise.noise(x / scale, z / scale, y / scale) * (max - min) + min;
+                data[x][y][z] = (float)noise.noise(x / scale, z / scale, y / scale) * (max - min) + min;
+                glm::vec3 d = glm::vec3(x, y, z) - glm::vec3(size / 2);
+                data[x][y][z] += 1 - (d.x * d.x + d.y * d.y + d.z * d.z) / pow(size * 0.5, 2);
+                data[x][y][z] -= (d.x * d.x + d.y * d.y + d.z * d.z) / pow(size * 0.75, 2);
             }
         }
     }
@@ -68,17 +71,15 @@ std::vector<Vertex> Chunk::generateVertices()
                         if (TRI[cubeIndex][i] == -1)
                             break;
 
-                        int a = CIAFE[TRI[cubeIndex][i]];
-                        int b = CIBFE[TRI[cubeIndex][i]];
-
-                        glm::vec3 p1 = cube[a];
-                        glm::vec3 p2 = cube[b];
+                        glm::vec3 p1 = cube[CIAFE[TRI[cubeIndex][i]]];
+                        glm::vec3 p2 = cube[CIBFE[TRI[cubeIndex][i]]];
                         float v1 = inBound(p1) ? data[(int)p1.x][(int)p1.y][(int)p1.z] : min;
                         float v2 = inBound(p2) ? data[(int)p2.x][(int)p2.y][(int)p2.z] : min;
 
                         glm::vec3 pos = p1 + (surface - v1) * (p2 - p1) / (v2 - v1);
+                        // glm::vec3 pos = (p1 + p2) / 2.0f;
                         glm::vec3 color(pos.x / size, pos.y / size, pos.z / size);
-                        vertices.push_back({ pos, glm::vec3(1), color });
+                        vertices.push_back({ pos, glm::vec3(1.0f), color });
 
                         if (++vertCount == 3)
                         {
