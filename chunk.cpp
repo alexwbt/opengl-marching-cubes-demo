@@ -31,11 +31,19 @@ std::vector<Vertex> Chunk::generateVertices()
             data[x][y] = new float[size];
             for (int z = 0; z < size; z++)
             {
+                // random
                 // data[x][y][z] = ((float)rand() / (float)RAND_MAX) * (max - min) + min;
+
+                // sphere with noise
                 data[x][y][z] = (float)noise.noise(x / scale, z / scale, y / scale) * (max - min) + min;
                 glm::vec3 d = glm::vec3(x, y, z) - glm::vec3(size / 2);
                 data[x][y][z] += 1 - (d.x * d.x + d.y * d.y + d.z * d.z) / pow(size * 0.5, 2);
                 data[x][y][z] -= (d.x * d.x + d.y * d.y + d.z * d.z) / pow(size * 0.75, 2);
+
+                // land with noise
+                // data[x][y][z] = (float)noise.noise(x / scale, z / scale, y / scale) * (max - min) + min;
+                // data[x][y][z] += 1 - y / (size * 0.5);
+                // data[x][y][z] -= y / (size * 0.75);
             }
         }
     }
