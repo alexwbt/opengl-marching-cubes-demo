@@ -8,7 +8,7 @@
 
 Camera::Camera()
 {
-	speed = 3.0f;
+	speed = 6.0f;
 	sensitivity = 0.1f;
 	position = glm::vec3(0.0f);
 
@@ -60,4 +60,9 @@ void Camera::rotate(double x, double y)
 {
 	yaw += x * sensitivity;
 	pitch += y * sensitivity;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
 }
