@@ -1,14 +1,7 @@
+bin/
+int/
+
 .vs/
-*.sln
-*.vcxproj
-*.vcxproj.filters
 *.vcxproj.user
 
-Debug/
-x64/
-
-glad/
-glfw-3.3.2.bin.WIN64/
-glm/
-
-glad.c
+UserMacro.props

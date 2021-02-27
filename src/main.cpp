@@ -28,20 +28,21 @@ int main()
     glCullFace(GL_FRONT);
 
     glEnable(GL_DEPTH_TEST);
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    Light::lights.push_back(&Light(glm::vec3(0.2f, -1.0f, 1.2f), { glm::vec3(0.25f), glm::vec3(1.0f), glm::vec3(1.0f) }));
+    Light light(glm::vec3(0.2f, -1.0f, 1.2f), { glm::vec3(0.25f), glm::vec3(1.0f), glm::vec3(1.0f) });
+    Light::lights.push_back(&light);
 
     Light flashLight = Light(glm::vec3(0.0f), glm::vec3(0.0f),
-    	{ glm::vec3(0.1f), glm::vec3(1.0f), glm::vec3(0.5f) },
-    	{ 1.0f, 0.09f, 0.032f }, 12.5f, 20.0f);
+        { glm::vec3(0.1f), glm::vec3(1.0f), glm::vec3(0.5f) },
+        { 1.0f, 0.09f, 0.032f }, 12.5f, 20.0f);
 
     Light::lights.push_back(&flashLight);
 
     Chunk chunk;
     Camera camera;
 
-    Shader shader({ "defaultVertexShader.vs", "defaultFragmentShader.fs" }, { GL_VERTEX_SHADER, GL_FRAGMENT_SHADER });
+    Shader shader({ "res/defaultVertexShader.vs", "res/defaultFragmentShader.fs" }, { GL_VERTEX_SHADER, GL_FRAGMENT_SHADER });
     shader.use();
     shader.setFloat("specular", 0.2f);
     shader.setFloat("shininess", 16.0f);

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "opengl-marching-cubes-demo", "opengl-marching-cubes-demo.vcxproj", "{DC51F35C-FD39-46B4-958E-6A8C0754376E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC51F35C-FD39-46B4-958E-6A8C0754376E}.Debug|x64.ActiveCfg = Debug|x64
+		{DC51F35C-FD39-46B4-958E-6A8C0754376E}.Debug|x64.Build.0 = Debug|x64
+		{DC51F35C-FD39-46B4-958E-6A8C0754376E}.Release|x64.ActiveCfg = Release|x64
+		{DC51F35C-FD39-46B4-958E-6A8C0754376E}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E089B2E9-0F3B-4A00-9929-D241FFFEB3EE}
+	EndGlobalSection
+EndGlobal
